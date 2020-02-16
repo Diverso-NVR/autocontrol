@@ -1,5 +1,10 @@
-import onvif
+import re
+
+from onvif import ONVIFCamera
 
 
 def call_default_preset(onvif_ip: str) -> None:
-    pass
+    user, password, host, port = re.split("[@:]", onvif_ip)
+
+    onvif_camera = ONVIFCamera(host, int(port), 'admin', 'Supervisor', '/etc/onvif/wsdl/')
+
