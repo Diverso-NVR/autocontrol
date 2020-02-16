@@ -18,8 +18,9 @@ class AutoControlApp:
         session.close()
 
         for room in self.rooms:
-            for source in room.sources:
-                call_default_preset(source.onvif_ip)
+            if room.auto_control:
+                for source in room.sources:
+                    call_default_preset(source.onvif_ip)
 
     def run(self):
         while True:
