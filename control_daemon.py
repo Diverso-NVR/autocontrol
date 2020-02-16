@@ -1,0 +1,31 @@
+import time
+
+import schedule
+
+from cameras_control import call_default_preset
+from models import Room, Session
+
+
+class AutoControlApp:
+    rooms = None
+
+    def __init__(self):
+        schedule.every(5).minutes.do(self.call_default_presets)
+
+    def call_default_presets(self):
+        session = Session()
+        self.rooms = session.query(Room).all()
+        session.close()
+
+        for room in self.rooms:
+            for source in room.sources:
+                call_default_preset(source.onvif_ip)
+
+    def run(self):
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+
+auto_control_app = AutoControlApp()
+auto_control_app.run()
