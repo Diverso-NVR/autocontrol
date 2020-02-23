@@ -36,7 +36,7 @@ class Room(Base):
                     main_source=self.main_source,
                     tracking_source=self.tracking_source,
                     screen_source=self.screen_source,
-                    auto_control = Column(Boolean, default=True))
+                    auto_control=self.auto_control)
 
 
 class Source(Base):
