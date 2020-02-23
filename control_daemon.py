@@ -10,7 +10,7 @@ class AutoControlApp:
     rooms = None
 
     def __init__(self):
-        schedule.every(5).minutes.do(self.call_default_presets)
+        schedule.every(2).minutes.do(self.call_default_presets)
 
     def call_default_presets(self):
         session = Session()
@@ -20,7 +20,7 @@ class AutoControlApp:
         for room in self.rooms:
             if room.auto_control:
                 for source in room.sources:
-                    call_default_preset(source.onvif_ip)
+                    call_default_preset(source.ip, source.port)
 
     def run(self):
         while True:
