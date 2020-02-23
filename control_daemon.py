@@ -20,7 +20,10 @@ class AutoControlApp:
         for room in self.rooms:
             if room.auto_control:
                 for source in room.sources:
-                    goto_home_position(source.ip, source.port)
+                    try:
+                        goto_home_position(source.ip, source.port)
+                    except Exception as e:
+                        print(e)
 
     def run(self):
         while True:
