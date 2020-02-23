@@ -23,6 +23,7 @@ class Room(Base):
     main_source = Column(String(100))
     tracking_source = Column(String(100))
     screen_source = Column(String(100))
+
     auto_control = Column(Boolean, default=True)
 
     def to_dict(self):
