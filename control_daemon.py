@@ -2,7 +2,7 @@ import time
 
 import schedule
 
-from cameras_control import call_default_preset
+from cameras_control import goto_home_position
 from models import Room, Session
 
 
@@ -20,7 +20,7 @@ class AutoControlApp:
         for room in self.rooms:
             if room.auto_control:
                 for source in room.sources:
-                    call_default_preset(source.ip, source.port)
+                    goto_home_position(source.ip, source.port)
 
     def run(self):
         while True:
