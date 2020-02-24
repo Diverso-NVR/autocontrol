@@ -42,5 +42,6 @@ class AutoControlApp:
             time.sleep(1)
 
 
-auto_control_app = AutoControlApp()
-auto_control_app.run()
+if __name__ == "__main__":
+    auto_control_app = AutoControlApp()
+    auto_control_app.run()

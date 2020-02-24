@@ -53,16 +53,6 @@ class Source(Base):
     tracking = Column(String(200))
     room_id = Column(Integer, ForeignKey('rooms.id'))
 
-    def __init__(self, **kwargs):
-        self.name = kwargs.get('name')
-        self.ip = kwargs.get('ip')
-        self.port = kwargs.get('port')
-        self.rtsp = kwargs.get('rtsp')
-        self.audio = kwargs.get('audio')
-        self.merge = kwargs.get('merge')
-        self.tracking = kwargs.get('tracking')
-        self.room_id = kwargs.get('room_id')
-
     def to_dict(self):
         return dict(id=self.id,
                     name=self.name,
