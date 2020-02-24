@@ -70,6 +70,6 @@ class Source(Base):
                     port=self.port,
                     rtsp=self.rtsp,
                     audio=self.audio,
-                    merge=self.audio,
+                    merge=self.merge,
                     tracking=self.tracking,
                     room_id=self.room_id)
