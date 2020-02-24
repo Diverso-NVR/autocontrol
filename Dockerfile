@@ -2,11 +2,11 @@ FROM python:3
 
 ARG VERSION=1
 
-COPY . /nvr_autocontrol
+COPY . /autocontrol
 
-RUN pip install --no-cache-dir -r /nvr_autocontrol/requirements.txt
+RUN pip install --no-cache-dir -r /autocontrol/requirements.txt
 
-ENV PYTHONPATH /nvr_autocontrol
+ENV PYTHONPATH /autocontrol
 
-CMD ["python", "/nvr_autocontrol/app.py"]
+CMD ["python", "/autocontrol/app.py"]
 
