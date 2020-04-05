@@ -46,6 +46,7 @@ ORM-библиотеки SQLAlchemy.
 
 ```bash
 git clone https://git.miem.hse.ru/nvr/autocontrol.git
+cp .env autocontrol/.env
 cd autocontrol
 ./run_docker.sh
 ```
