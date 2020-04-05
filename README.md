@@ -49,3 +49,8 @@ git clone https://git.miem.hse.ru/nvr/autocontrol.git
 cd autocontrol
 ./run_docker.sh
 ```
+
+## Авторы
+
+[Денис Приходько](https://github.com/Burnouttt), 
+[Дмитрий Кудрявцев](https://github.com/kuderr)
