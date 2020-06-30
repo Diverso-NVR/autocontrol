@@ -2,9 +2,10 @@ FROM python:3
 
 ARG VERSION=1
 
-COPY . /autocontrol
+COPY ./autocontrol /autocontrol
+COPY ./requirements.txt /
 
-RUN pip install --no-cache-dir -r /autocontrol/requirements.txt
+RUN pip install -r requirements.txt
 
 ENV PYTHONPATH /autocontrol
 

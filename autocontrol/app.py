@@ -1,9 +1,8 @@
 import time
-
 import schedule
 
-from cameras_control import goto_home_position
-from models import Room, Session
+from core.cameras_control import goto_home_position
+from core.db.models import Room, Session
 
 
 class AutoControlApp:
