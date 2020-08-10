@@ -23,7 +23,8 @@ class AutoControlApp:
                     try:
                         goto_home_position(source.ip, source.port)
                     except Exception as e:
-                        print(e)
+                        print(
+                            f"Error in while moving {source.ip} to home position:", e)
 
     def set_autocontrol_true(self):
         session = Session()
