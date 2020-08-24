@@ -18,13 +18,15 @@ class AutoControlApp:
         session.close()
 
         for room in self.rooms:
-            if room.auto_control:
-                for source in room.sources:
-                    try:
-                        goto_home_position(source.ip, source.port)
-                    except Exception as e:
-                        print(
-                            f"Error in while moving {source.ip} to home position:", e)
+            if not room.auto_control:
+                continue
+
+            for source in room.sources:
+                try:
+                    goto_home_position(source.ip, source.port)
+                except Exception as e:
+                    print(
+                        f"Error while moving {source.ip} to home position:", e)
 
     def set_autocontrol_true(self):
         session = Session()
