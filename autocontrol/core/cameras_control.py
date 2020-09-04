@@ -1,5 +1,9 @@
+import logging
+
 import zeep
 from onvif import ONVIFCamera
+
+logger = logging.getLogger('autocontrol_logger')
 
 
 def zeep_pythonvalue(self, xmlvalue):
@@ -7,6 +11,8 @@ def zeep_pythonvalue(self, xmlvalue):
 
 
 def goto_home_position(ip: str, port: str) -> None:
+    logger.info(f'Calling default preset on device {ip}:{port}')
+
     zeep.xsd.simple.AnySimpleType.pythonvalue = zeep_pythonvalue
 
     camera = ONVIFCamera(ip, port, "admin", "Supervisor")
