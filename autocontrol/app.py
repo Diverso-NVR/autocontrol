@@ -25,13 +25,15 @@ class AutoControlApp:
         session.close()
 
         for room in self.rooms:
-            if room.auto_control:
-                for source in room.sources:
-                    try:
-                        goto_home_position(source.ip, source.port)
-                    except Exception:
-                        self.logger.error(f'Error while setting device {source.ip}:{source.port} to home position',
-                                          exc_info=True)
+            if not room.auto_control:
+                continue
+
+            for source in room.sources:
+                try:
+                    goto_home_position(source.ip, source.port)
+                except Exception:
+                    self.logger.error(f'Error while setting device {source.ip}:{source.port} to home position',
+                                      exc_info=True)
 
     def set_autocontrol_true(self):
         self.logger.info('Setting automatic cameras control on every room')
