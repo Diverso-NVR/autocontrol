@@ -13,7 +13,7 @@ def zeep_pythonvalue(self, xmlvalue):
 
 @timeout_decorator.timeout(3)
 def goto_home_position(ip: str, port: str) -> None:
-    logger.info(f'Calling default preset on device {ip}:{port}')
+    logger.info(f'Moving device {ip}:{port} to home position')
 
     zeep.xsd.simple.AnySimpleType.pythonvalue = zeep_pythonvalue
 
