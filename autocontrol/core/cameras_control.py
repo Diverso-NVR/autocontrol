@@ -1,8 +1,8 @@
 import logging
 
+import timeout_decorator
 import zeep
 from onvif import ONVIFCamera
-import timeout_decorator
 
 logger = logging.getLogger('autocontrol_logger')
 
@@ -26,4 +26,4 @@ def goto_home_position(ip: str, port: str) -> None:
 
     ptz.GotoHomePosition(profile1_token)
 
-    print(f"Successfully moved {ip} to home position")
+    logger.info(f"Successfully moved device {ip}:{port} to home position")
