@@ -5,8 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
 Base = declarative_base()
-engine = create_engine(os.environ.get('SQLALCHEMY_DATABASE_URI'))
-Session = sessionmaker(bind=engine)
+# engine = create_engine(os.environ.get('SQLALCHEMY_DATABASE_URI'))
+# Session = sessionmaker(bind=engine)
 
 
 class Room(Base):
@@ -26,19 +26,6 @@ class Room(Base):
 
     auto_control = Column(Boolean, default=True)
 
-    def to_dict(self):
-        return dict(id=self.id,
-                    name=self.name,
-                    tracking_state=self.tracking_state,
-                    sources=[source.to_dict() for source in self.sources],
-                    drive=self.drive,
-                    calendar=self.calendar,
-                    sound_source=self.sound_source,
-                    main_source=self.main_source,
-                    tracking_source=self.tracking_source,
-                    screen_source=self.screen_source,
-                    auto_control=self.auto_control)
-
 
 class Source(Base):
     __tablename__ = 'sources'
@@ -52,14 +39,3 @@ class Source(Base):
     merge = Column(String(200))
     tracking = Column(String(200))
     room_id = Column(Integer, ForeignKey('rooms.id'))
-
-    def to_dict(self):
-        return dict(id=self.id,
-                    name=self.name,
-                    ip=self.ip,
-                    port=self.port,
-                    rtsp=self.rtsp,
-                    audio=self.audio,
-                    merge=self.merge,
-                    tracking=self.tracking,
-                    room_id=self.room_id)
