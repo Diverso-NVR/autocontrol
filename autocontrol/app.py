@@ -31,14 +31,16 @@ class AutoControlApp:
                 continue
 
             for source in room.sources:
+                ip = source.ip
+                port = source.port
                 try:
                     self.logger.info(f'Moving device {ip}:{port} to home position')
-                    goto_home_position(source.ip, source.port)
+                    goto_home_position(ip, port)
                     self.logger.info(f"Successfully moved device {ip}:{port} to home position")
                 except TimeoutError:
-                    self.logger.error(f'Timeout error while setting device {source.ip}:{source.port} to home position')
+                    self.logger.error(f'Timeout error while setting device {ip}:{port} to home position')
                 except:
-                    self.logger.error(f'Error while setting device {source.ip}:{source.port} to home position',
+                    self.logger.error(f'Error while setting device {ip}:{port} to home position',
                                       exc_info=True)
 
     def set_autocontrol_true(self):
