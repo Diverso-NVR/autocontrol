@@ -2,18 +2,14 @@ import logging
 
 import timeout_decorator
 import zeep
+import onvif
 from onvif import ONVIFCamera
 
-logger = logging.getLogger('autocontrol_logger')
-
-
-def zeep_pythonvalue(self, xmlvalue):
-    return xmlvalue
+zeep.xsd.simple.AnySimpleType.pythonvalue = lambda self, xmlvalue: xmlvalue
 
 
 @timeout_decorator.timeout(5)
-def goto_home_position(ip: str, port: str) -> None:
-    zeep.xsd.simple.AnySimpleType.pythonvalue = zeep_pythonvalue
+def goto_nvr_preset(ip: str, port: str) -> None:
 
     camera = ONVIFCamera(ip, port, "admin", "Supervisor")
 
@@ -22,4 +18,8 @@ def goto_home_position(ip: str, port: str) -> None:
 
     profile1_token = media.GetProfiles()[0].token
 
-    ptz.GotoHomePosition(profile1_token)
+    requestg = ptz.create_type('GotoPreset')
+    requestg.ProfileToken = profile1_token
+    requestg.PresetToken = '42'
+
+    ptz.GotoPreset(requestg)

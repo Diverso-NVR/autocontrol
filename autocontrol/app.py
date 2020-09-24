@@ -3,18 +3,16 @@ import time
 
 import schedule
 
-from core.cameras_control import goto_home_position
+from core.cameras_control import goto_nvr_preset
 from core.db.models import Room, Session
-
-from timeout_decorator.timeout_decorator import TimeoutError
 
 
 class AutoControlApp:
-    rooms = None
-    logger = logging.getLogger('autocontrol_logger')
-
     def __init__(self):
+        self.logger = logging.getLogger('autocontrol_logger')
         self.logger.info('Class \"AutoControlApp\" instantiated')
+
+        self.room = None
 
         schedule.every(2).minutes.do(self.call_default_presets)
         schedule.every().day.at("00:00").do(self.set_autocontrol_true)
@@ -34,14 +32,10 @@ class AutoControlApp:
                 ip = source.ip
                 port = source.port
                 try:
-                    self.logger.info(f'Moving device {ip}:{port} to home position')
-                    goto_home_position(ip, port)
-                    self.logger.info(f"Successfully moved device {ip}:{port} to home position")
-                except TimeoutError:
-                    self.logger.error(f'Timeout error while setting device {ip}:{port} to home position')
-                except:
-                    self.logger.error(f'Error while setting device {ip}:{port} to home position',
-                                      exc_info=True)
+                    self.logger.info(f'Moving device {ip}:{port}')
+                    goto_nvr_preset(ip, port)
+                except Exception as err:
+                    self.logger.error(f'Error while setting device {ip}:{port}')
 
     def set_autocontrol_true(self):
         self.logger.info('Setting automatic cameras control on every room')
@@ -60,29 +54,9 @@ class AutoControlApp:
             schedule.run_pending()
             time.sleep(1)
 
-    @staticmethod
-    def create_logger(mode='INFO'):
-        logs = {'INFO': logging.INFO,
-                'DEBUG': logging.DEBUG}
-
-        logger = logging.getLogger('autocontrol_logger')
-        logger.setLevel(logs[mode])
-
-        handler = logging.StreamHandler()
-        handler.setLevel(logs[mode])
-
-        formatter = logging.Formatter(
-            '%(levelname)-8s  %(asctime)s    %(message)s',
-            datefmt='%d-%m-%Y %I:%M:%S %p')
-
-        handler.setFormatter(formatter)
-
-        logger.addHandler(handler)
 
 
 if __name__ == "__main__":
-    AutoControlApp.create_logger()
-
     auto_control_app = AutoControlApp()
     auto_control_app.call_default_presets()
     auto_control_app.run()
