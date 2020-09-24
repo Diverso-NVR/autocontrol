@@ -11,10 +11,8 @@ def zeep_pythonvalue(self, xmlvalue):
     return xmlvalue
 
 
-@timeout_decorator.timeout(3)
+@timeout_decorator.timeout(5)
 def goto_home_position(ip: str, port: str) -> None:
-    logger.info(f'Moving device {ip}:{port} to home position')
-
     zeep.xsd.simple.AnySimpleType.pythonvalue = zeep_pythonvalue
 
     camera = ONVIFCamera(ip, port, "admin", "Supervisor")
@@ -25,5 +23,3 @@ def goto_home_position(ip: str, port: str) -> None:
     profile1_token = media.GetProfiles()[0].token
 
     ptz.GotoHomePosition(profile1_token)
-
-    logger.info(f"Successfully moved device {ip}:{port} to home position")

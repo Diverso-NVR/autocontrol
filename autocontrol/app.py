@@ -6,6 +6,8 @@ import schedule
 from core.cameras_control import goto_home_position
 from core.db.models import Room, Session
 
+from timeout_decorator.timeout_decorator import TimeoutError
+
 
 class AutoControlApp:
     rooms = None
@@ -30,8 +32,12 @@ class AutoControlApp:
 
             for source in room.sources:
                 try:
+                    self.logger.info(f'Moving device {ip}:{port} to home position')
                     goto_home_position(source.ip, source.port)
-                except Exception:
+                    self.logger.info(f"Successfully moved device {ip}:{port} to home position")
+                except TimeoutError:
+                    self.logger.error(f'Timeout error while setting device {source.ip}:{source.port} to home position')
+                except:
                     self.logger.error(f'Error while setting device {source.ip}:{source.port} to home position',
                                       exc_info=True)
 
@@ -76,4 +82,5 @@ if __name__ == "__main__":
     AutoControlApp.create_logger()
 
     auto_control_app = AutoControlApp()
+    auto_control_app.call_default_presets()
     auto_control_app.run()
